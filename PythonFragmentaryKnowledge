@@ -1,0 +1,19 @@
+1 function zip
+    Return a list of tuples, where each tuple contains the i-th element
+  from each of the argument sequences.  The returned list is truncated
+  in length to the length of the shortest argument sequence.
+  x = [1, 2, 3]
+  y = [4, 5, 6]
+  z = [7, 8, 9]
+  res = zip(x, y, z)
+  [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+  
+2 enumerrate
+  count a file lines. 
+  count = len(open("./SVMs.py", 'rU').readlines())
+  This method is easy but may not work while the file is too great.
+  We an use enumerrate:
+  for count, line in enumerate(open('./SVMs.py', 'rU')):
+    pass
+  count += 1
+  for enumerrate iteratively retrieves the list or file.
