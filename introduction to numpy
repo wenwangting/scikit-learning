@@ -1,0 +1,5 @@
+NumPy is the fundamental package for scientific computing with Python. So we take a note for some common functions.
+1. numpy.choose
+  construct an array from an index array and a set of arrays
+  to choose from. np.choose(a, c) = np.array([c[a[I]][I] for I in ndi.ndindex(a.shape)])
+  
