@@ -1,0 +1,70 @@
+Some useful link for scikit course and some notes.
+1 reshape data.
+  http://reverland.org/python/2012/10/14/scikit-learn-machine-learning-in-python/#section
+  from sklearn import datasets
+  import numpy as np
+  import pylab as pl
+  iris = datasets.load_iris()
+  iris_indices = np.unique(iris.target)
+  digits = datasets.load_digits()
+  pl.imshow(digits.images[0], cmap=pl.cm.gray_r)
+  pl.show()
+  data = digits.images.reshape((digits.images.shape[0], -1)) "reshape data to 64 vector"
+  
+2 learing and predicating
+  from sklearn import svm
+  clf = svm.LinearSVC()
+  clf.fit(iris.data, iris.target) # learn from the data
+  now we got the model with coefficients
+  clf.coef_ and use clf.predict to make predicion.
+
+3 classifying
+3.1 KNN classifier.
+  from sklearn import neighbors
+  knn = neighbors.KNeighborsClassifier()
+  knn.fit(iris.data, iris.target)
+  knn.predict([[0.1, 0.2, 0.3, 0.4]])
+
+#we will got a permutation of iris data to verify the score of the knn classifier.
+  perm = np.random.permutation(iris.target.size)
+  iris.data = iris.data[perm]
+  iris.target = iris.target[perm]
+  knn.fit(iris.data[:100], iris.target[:100])
+  knn.score(iris.data[100:], iris.data[100:])
+  
+3.2 SVMs
+  from sklearn import svm
+  svc = svm.SVC(kernel='linear')
+  svc.fit(iris.data, iris.target)
+
+test: trains a digit dataset and see score of prediction.
+#!/usr/bin/env python
+import numpy as np
+from sklearn import svm
+from sklearn import datasets
+
+digits = datasets.load_digits()
+perm = np.random.permutation(digits.target.size)
+x = digits.data[perm]
+y = digits.target[perm]
+
+svc1 = svm.SVC(kernel='linear')
+svc2 = svm.SVC(kernel='poly', degree=3)
+svc3 = svm.SVC(kernel='rbf')
+
+svc1.fit(x[:1600], y[:1600])
+svc2.fit(x[:1600], y[:1600])
+svc3.fit(x[:1600], y[:1600])
+print svc1.score(x[1600:], y[1600:])
+print svc2.score(x[1600:], y[1600:])
+print svc3.score(x[1600:], y[1600:])
+
+4 clustering algorithm
+  from sklearn import cluster, datasets
+  iris = datasets.load_iris()
+  k_means = cluster.KMeans(n_cluster=len(np.unique(iris.target)))
+  k_means.fit(iris.data, iris.target)
+  # the final centroids
+  print k_means.cluster_centers_
+  # print k_means.labels can show node label
+  print k_means.labels
